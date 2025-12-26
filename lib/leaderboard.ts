@@ -38,13 +38,19 @@ export async function getTopUsers(
     .limit(safeLimit);
 
   // Add rank to each user
-  const leaderboard: LeaderboardUser[] = results.map((result, index) => ({
-    rank: index + 1,
-    userId: result.userId,
-    name: result.name,
-    balance: result.balance || 0,
-    tasksCompleted: result.tasksCompleted || 0,
-  }));
+  const leaderboard: LeaderboardUser[] = [];
+
+  for (let i = 0; i < results.length; i++) {
+    const result = results[i];
+
+    leaderboard.push({
+      rank: i + 1,
+      userId: result.userId,
+      name: result.name,
+      balance: result.balance || 0,
+      tasksCompleted: result.tasksCompleted || 0,
+    });
+  }
 
   return leaderboard;
 }
