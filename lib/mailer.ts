@@ -1,19 +1,22 @@
-import "dotenv/config";
 import nodemailer from "nodemailer";
 
 const mailerEmail = process.env.MAILER_EMAIL;
 const mailerPassword = process.env.MAILER_PASSWORD;
 
+if (!mailerEmail || !mailerPassword) {
+  console.warn(
+    "⚠️ MAILER_EMAIL or MAILER_PASSWORD is not defined in environment variables."
+  );
+}
+
 const transporter = nodemailer.createTransport({
-  host: "smtp.hostinger.com",
-  port: 465,
-  secure: true,
+  service: "gmail",
   auth: {
     user: mailerEmail,
     pass: mailerPassword,
   },
-  logger: process.env.NODE_ENV !== "production",
-  debug: process.env.NODE_ENV !== "production",
+  logger: true,
+  debug: true,
 });
 
 interface SendMailParams {

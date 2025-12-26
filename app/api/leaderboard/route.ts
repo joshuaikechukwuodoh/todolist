@@ -9,7 +9,6 @@ export async function GET(request: NextRequest) {
 
     // Get top users
     const leaderboard = await getTopUsers(limit);
-
     return NextResponse.json({
       leaderboard,
       total: leaderboard.length,

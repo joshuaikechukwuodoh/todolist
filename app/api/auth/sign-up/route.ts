@@ -9,7 +9,7 @@ const signUpSchema = z.object({
   name: z.string().min(3),
   email: z.string().email(),
   password: z.string().min(6),
-  role: z.enum(["admin", "user"]),
+  role: z.enum(["admin", "user"]).default("user"),
 });
 export async function POST(request: NextRequest) {
   try {
@@ -18,23 +18,15 @@ export async function POST(request: NextRequest) {
     const { name, email, password, role } = validate(signUpSchema, body);
 
     // create auth user
-    const user = await auth.api.signUpEmail({
+    return await auth.api.signUpEmail({
       body: {
         name,
         email,
         password,
         role,
       },
+      asResponse: true,
     });
-
-    if (!user) {
-      return NextResponse.json(
-        { message: "Failed to create user" },
-        { status: 500 }
-      );
-    }
-
-    return NextResponse.json({ user }, { status: 201 });
   } catch (error) {
     console.error("Error signing up:", error);
 

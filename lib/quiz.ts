@@ -141,3 +141,5 @@ export function validateQuizAnswers(
 export function isPerfectScore(score: number): boolean {
   return score >= QUIZ.PERFECT_SCORE;
 }
+
+

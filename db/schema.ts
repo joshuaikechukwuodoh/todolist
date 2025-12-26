@@ -9,10 +9,9 @@ import {
   uuid,
   jsonb,
 } from "drizzle-orm/pg-core";
-import { randomUUID } from "crypto";
 
 export const user = pgTable("user", {
-  id: uuid("id").primaryKey(),
+  id: text("id").primaryKey(),
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
   emailVerified: boolean("email_verified").default(false).notNull(),
@@ -22,7 +21,7 @@ export const user = pgTable("user", {
     .defaultNow()
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
-  role: text("role"),
+  role: text("role").default("user").notNull(),
 });
 
 export const session = pgTable(
@@ -135,7 +134,7 @@ export const wallet = pgTable(
   "wallet",
   {
     id: uuid("id").defaultRandom().primaryKey(),
-    userId: uuid("user_id")
+    userId: text("user_id")
       .notNull()
       .unique()
       .references(() => user.id, { onDelete: "cascade" }),
@@ -153,7 +152,7 @@ export const transaction = pgTable(
   "transaction",
   {
     id: uuid("id").defaultRandom().primaryKey(),
-    userId: uuid("user_id")
+    userId: text("user_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
     amount: integer("amount").notNull(),

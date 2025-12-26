@@ -24,21 +24,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const user = await auth.api.signInEmail({
+    return await auth.api.signInEmail({
       body: {
         email,
         password,
       },
+      asResponse: true,
     });
-
-    if (!user) {
-      return NextResponse.json(
-        { message: "Failed to sign in" },
-        { status: 500 }
-      );
-    }
-
-    return NextResponse.json({ user }, { status: 200 });
   } catch (error) {
     console.error("Error signing in:", error);
 

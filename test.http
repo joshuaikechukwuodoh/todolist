@@ -1,0 +1,125 @@
+@baseUrl = http://localhost:3000/api
+
+### Authentication
+
+# @name signUp
+POST {{baseUrl}}/auth/sign-up
+Content-Type: application/json
+
+{
+  "email": "nalama2918@roratu.com",
+  "password": "Password123!",
+  "name": "Joshua smith"
+}
+
+###
+
+# @name signIn
+POST {{baseUrl}}/auth/sign-in
+Content-Type: application/json
+
+{
+  "email": "nalama2918@roratu.com",
+  "password": "Password123!"
+}
+
+###
+
+# @name signOut
+POST {{baseUrl}}/auth/sign-out
+Content-Type: application/json
+
+{}
+
+###
+
+@userId = tLlII7dosQwMKAvt1EpkpIzljh9pfBzt
+
+# @name getMe
+GET {{baseUrl}}/auth/me/{{userId}}
+
+###
+
+### Task Management
+
+# @name createBooking
+POST {{baseUrl}}/task/booking
+Content-Type: application/json
+
+{
+  "title": "Complete project documentation",
+  "description": "Write comprehensive API docs",
+  "stake": 50
+}
+
+###
+
+# @name getTodayTasks
+GET {{baseUrl}}/task/today
+
+###
+
+# @name closeDay
+POST {{baseUrl}}/task/close-day
+Content-Type: application/json
+
+{}
+
+###
+
+### Quiz System
+
+@taskId = replace-with-task-id
+
+# @name generateQuiz
+POST {{baseUrl}}/quiz/generate
+Content-Type: application/json
+
+{
+  "taskId": "{{taskId}}"
+}
+
+###
+
+@quizId = replace-with-quiz-id
+
+# @name submitQuiz
+POST {{baseUrl}}/quiz/submit
+Content-Type: application/json
+
+{
+  "quizId": "{{quizId}}",
+  "answers": [
+    "Complete the backend",
+    "API documentation",
+    "10 PM today",
+    "Database and AI",
+    "Functional backend"
+  ]
+}
+
+###
+
+### Economy System
+
+# @name getBalance
+GET {{baseUrl}}/economy/balance
+
+###
+
+# @name getTransactions
+GET {{baseUrl}}/economy/transaction?limit=20&offset=0
+
+###
+
+### Leaderboard
+
+# @name getLeaderboard
+GET {{baseUrl}}/leaderboard?limit=10
+
+###
+
+@leaderboardUserId = replace-with-user-id
+
+# @name getUserStats
+GET {{baseUrl}}/leaderboard/{{leaderboardUserId}}
